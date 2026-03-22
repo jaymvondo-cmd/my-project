@@ -1,5 +1,7 @@
 <?php
-include("config/db.php");
+require_once(__DIR__ . "/config/app.php");
+require_once(__DIR__ . "/config/db.php");
+
 $message = "";
 
 if(isset($_POST['submit'])){
@@ -11,18 +13,18 @@ if(isset($_POST['submit'])){
 
     // Image upload
     $image = $_FILES['image']['name'];
-    $target = "uploads/" . basename($image);
+    $target = __DIR__ . "/uploads/" . basename($image);
 
     // Create uploads directory if it doesn't exist
-    if (!file_exists('uploads')) {
-        mkdir('uploads', 0777, true);
+    if (!file_exists(__DIR__ . '/uploads')) {
+        mkdir(__DIR__ . '/uploads', 0777, true);
     }
 
     if(move_uploaded_file($_FILES['image']['tmp_name'], $target)){
-        $sql = "INSERT INTO products (name, description, price, stock, category_id, image_path)
-                VALUES ('$name', '$desc', '$price', '$stock', '$category', '$image')";
-        if($conn->query($sql)){
-            $message = "<div style='color: #4cd137; text-align: center; margin-bottom: 20px; font-weight: bold;'>Product added successfully!</div>";
+        $stmt = $conn->prepare("INSERT INTO products (name, description, price, stock, category_id, image_path) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssdiis", $name, $desc, $price, $stock, $category, $image);
+        if($stmt->execute()){
+            $message = "<div style='color: #4cd137; text-align: center; margin-bottom: 20px; font-weight: bold;'>Gear added successfully!</div>";
         } else {
             $message = "<div style='color: #e84118; text-align: center; margin-bottom: 20px; font-weight: bold;'>Error: " . $conn->error . "</div>";
         }
@@ -30,18 +32,18 @@ if(isset($_POST['submit'])){
         $message = "<div style='color: #e84118; text-align: center; margin-bottom: 20px; font-weight: bold;'>Failed to upload image.</div>";
     }
 }
-include("includes/header.php");
+require_once(__DIR__ . "/includes/header.php");
 ?>
 
 <div class="glass-form" style="margin-top: 50px;">
-    <h2>Add New Product</h2>
+    <h2>Add New Gear</h2>
     <?php echo $message; ?>
     <form method="POST" enctype="multipart/form-data">
-        <label style="color: var(--text-muted); font-size: 14px; margin-bottom: 5px; display: block;">Product Name</label>
-        <input type="text" name="name" placeholder="Enter product name" required>
+        <label style="color: var(--text-muted); font-size: 14px; margin-bottom: 5px; display: block;">Gear Name</label>
+        <input type="text" name="name" placeholder="Enter gear name" required>
 
         <label style="color: var(--text-muted); font-size: 14px; margin-bottom: 5px; display: block;">Description</label>
-        <textarea name="description" placeholder="A rich description of the product..." rows="4" required></textarea>
+        <textarea name="description" placeholder="A rich description of the gear..." rows="4" required></textarea>
 
         <label style="color: var(--text-muted); font-size: 14px; margin-bottom: 5px; display: block;">Price ($)</label>
         <input type="number" name="price" step="0.01" placeholder="0.00" required>
@@ -65,8 +67,8 @@ include("includes/header.php");
         <label style="color: var(--text-muted); font-size: 14px; margin-bottom: 5px; display: block;">Product Image</label>
         <input type="file" name="image" accept="image/*" style="padding: 10px; background: rgba(0,0,0,0.2);" required>
 
-        <button name="submit" class="btn-primary" style="margin-top: 20px;">Add Product</button>
+        <button name="submit" class="btn-primary" style="margin-top: 20px;">Add Gear</button>
     </form>
 </div>
 
-<?php include("includes/footer.php"); ?>
+<?php require_once(__DIR__ . "/includes/footer.php"); ?>
