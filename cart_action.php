@@ -1,10 +1,6 @@
 <?php
-require_once(__DIR__ . "/config/app.php");
-require_once(__DIR__ . "/config/db.php");
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
+include("config/db.php");
 
 // Initialize cart if not exists
 if (!isset($_SESSION['cart'])) {
@@ -46,7 +42,7 @@ if ($action === 'add' && $id > 0) {
     $_SESSION['cart'] = [];
 }
 
-// Redirect to cart page using BASE_URL for consistency
-header("Location: " . BASE_URL . "pages/cart.php");
+// Redirect back to cart page
+header("Location: pages/cart.php");
 exit();
 ?>

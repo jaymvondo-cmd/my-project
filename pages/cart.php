@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__ . "/../config/app.php");
-require_once(__DIR__ . "/../includes/header.php");
+include("../config/db.php");
+include("../includes/header.php");
 
 $cart_items = $_SESSION['cart'] ?? [];
 $total_cost = 0;
@@ -8,7 +8,7 @@ $total_cost = 0;
 
 <div class="glass-form" style="max-width: 800px; margin-top: 40px; padding: 40px;">
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; margin-bottom: 30px;">
-        <h2 style="margin: 0;">Your Shopping Vault</h2>
+        <h2 style="margin: 0;">Your Shopping Cart</h2>
         <span style="color: var(--text-muted); font-size: 16px;"><?php echo count($cart_items); ?> Item(s)</span>
     </div>
 
@@ -19,9 +19,9 @@ $total_cost = 0;
                 <circle cx="20" cy="21" r="1"></circle>
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
             </svg>
-            <h3 style="color: white; margin-bottom: 15px;">Your vault is empty</h3>
-            <p style="color: var(--text-muted); margin-bottom: 25px;">Ready to upgrade your gear? Browse our collection and fill your vault.</p>
-            <a href="<?php echo BASE_URL; ?>pages/products.php" class="btn-primary" style="text-decoration: none; padding: 12px 30px; display: inline-block; width: auto;">Start Shopping</a>
+            <h3 style="color: white; margin-bottom: 15px;">Your cart is empty</h3>
+            <p style="color: var(--text-muted); margin-bottom: 25px;">Looks like you haven't added any products to your cart yet.</p>
+            <a href="products.php" class="btn-primary" style="text-decoration: none; padding: 12px 30px; display: inline-block; width: auto;">Start Shopping</a>
         </div>
     <?php else: ?>
         <div style="display: flex; flex-direction: column; gap: 20px;">
@@ -32,10 +32,10 @@ $total_cost = 0;
                 if (filter_var($item['image'], FILTER_VALIDATE_URL)) {
                     $imgPath = $item['image'];
                 } else {
-                    $imgPath = $item['image'] ? BASE_URL . "uploads/" . $item['image'] : "https://via.placeholder.com/150?text=No+Image";
+                    $imgPath = $item['image'] ? "../uploads/" . $item['image'] : "https://via.placeholder.com/150?text=No+Image";
                 }
             ?>
-            <div style="display: flex; align-items: center; gap: 20px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border);">
+            <div style="display: flex; align-items: center; gap: 20px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border);">
                 <img src="<?php echo htmlspecialchars($imgPath); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
                 
                 <div style="flex: 1;">
@@ -45,7 +45,7 @@ $total_cost = 0;
                 
                 <div style="text-align: right;">
                     <div style="color: var(--primary); font-weight: bold; font-size: 18px; margin-bottom: 10px;">$<?php echo number_format($subtotal, 2); ?></div>
-                    <a href="<?php echo BASE_URL; ?>cart_action.php?action=remove&id=<?php echo $id; ?>" style="color: #e74c3c; text-decoration: none; font-size: 14px; transition: 0.3s;" onmouseover="this.style.color='#c0392b';" onmouseout="this.style.color='#e74c3c';">Remove</a>
+                    <a href="../cart_action.php?action=remove&id=<?php echo $id; ?>" style="color: #e74c3c; text-decoration: none; font-size: 14px; transition: 0.3s;" onmouseover="this.style.color='#c0392b';" onmouseout="this.style.color='#e74c3c';">Remove</a>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -58,11 +58,12 @@ $total_cost = 0;
             </div>
             
             <div style="display: flex; gap: 15px;">
-                <a href="<?php echo BASE_URL; ?>cart_action.php?action=clear" style="flex: 1; text-align: center; text-decoration: none; padding: 15px; border-radius: 8px; border: 1px solid rgba(231, 76, 60, 0.5); color: #e74c3c; transition: 0.3s;" onmouseover="this.style.background='rgba(231, 76, 60, 0.1)';" onmouseout="this.style.background='transparent';">Clear Vault</a>
+                <a href="../cart_action.php?action=clear" style="flex: 1; text-align: center; text-decoration: none; padding: 15px; border-radius: 8px; border: 1px solid rgba(231, 76, 60, 0.5); color: #e74c3c; transition: 0.3s;" onmouseover="this.style.background='rgba(231, 76, 60, 0.1)';" onmouseout="this.style.background='transparent';">Clear Cart</a>
                 <a href="checkout.php" class="btn-primary" style="flex: 2; text-align: center; text-decoration: none; padding: 15px;">Proceed to Checkout</a>
             </div>
         </div>
     <?php endif; ?>
 </div>
 
-<?php require_once(__DIR__ . "/../includes/footer.php"); ?>
+<?php include("../includes/footer.php"); ?>
+>
