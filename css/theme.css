@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+    --primary: #F4A261;
+    --primary-hover: #E76F51;
+    --dark: #2A1B18;
+    --darker: #1C1210;
+    --glass: rgba(42, 27, 24, 0.75);
+    --glass-border: rgba(255, 230, 210, 0.1);
+    --text-main: #FFF3E0;
+    --text-muted: #D4A373;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-main);
+    background-color: var(--darker);
+    background-image: url('../assets/gaming-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Background Video Styles */
+.video-bg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Was -1; moving it to 1 puts it above the body but behind navbar/content */
+    overflow: hidden;
+    background: transparent;
+}
+
+#bg-video {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    opacity: 0.85; /* Increased opacity from 0.6 */
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Reduced darkness of the background gradient */
+    background: linear-gradient(180deg, rgba(28,18,16,0.6) 0%, rgba(28,18,16,0.4) 100%);
+}
+
+/* Navbar (Glassmorphism) */
+.navbar {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 15px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Increased to stay well above video */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: 1px;
+}
+
+.search-bar input {
+    width: 100%;
+    min-width: 350px;
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(255, 153, 0, 0.2);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--primary);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links .btn-login, .nav-links .btn-logout {
+    background: var(--primary);
+    color: var(--darker) !important;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.nav-links .btn-login::after, .nav-links .btn-logout::after {
+    display: none;
+}
+
+.nav-links .btn-login:hover, .nav-links .btn-logout:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 153, 0, 0.3);
+}
+
+/* Main Content Wrapper */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+/* Product Cards with Animations */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 153, 0, 0.3);
+}
+
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.5s ease;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: white;
+    font-weight: 600;
+}
+
+.card p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 15px;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.price {
+    color: var(--primary);
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #FF9900, #FFB84D);
+    color: var(--darker);
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    width: 100%;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 5px 15px rgba(255, 153, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Forms */
+.glass-form {
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 500px;
+    margin: 40px auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.glass-form h2 {
+    color: var(--primary);
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 28px;
+}
+
+.glass-form input, .glass-form textarea, .glass-form select {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+
+.glass-form input:focus, .glass-form textarea:focus, .glass-form select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.glass-form select option {
+    background: var(--darker);
+    color: white;
+}
+
+/* Titles */
+.page-title {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    text-align: center;
+    background: linear-gradient(45deg, #fff, #D4A373);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

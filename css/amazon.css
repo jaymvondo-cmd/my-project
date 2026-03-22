@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #EAEDED;
+}
+
+/* NAVBAR */
+.navbar {
+    background: #131921;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #FF9900;
+}
+
+.search-bar input {
+    width: 400px;
+    padding: 8px;
+}
+
+.nav-links a {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+}
+
+/* PRODUCTS GRID */
+.container {
+    padding: 20px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* PRODUCT CARD */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card h3 {
+    font-size: 16px;
+}
+
+.price {
+    color: #B12704;
+    font-weight: bold;
+}
+
+.btn {
+    background: #FFD814;
+    border: none;
+    padding: 8px;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* CART */
+.cart-box {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+}
